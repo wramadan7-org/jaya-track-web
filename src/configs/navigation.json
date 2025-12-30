@@ -1,0 +1,32 @@
+{
+  "sidebar": [
+    {
+      "label": "Dashboard",
+      "path": "/dashboard",
+      "icon": "home"
+    },
+    {
+      "label": "Master",
+      "icon": "settings",
+      "children": [
+        {
+          "label": "Users",
+          "path": "/users"
+        },
+        {
+          "label": "Products",
+          "path": "/product"
+        }
+      ]
+    }
+  ],
+  "navbar": [
+    {
+      "label": "Profile",
+      "children": [
+        { "label": "My Profile", "path": "/profile" },
+        { "label": "Logout", "path": "/logout" }
+      ]
+    }
+  ]
+}
