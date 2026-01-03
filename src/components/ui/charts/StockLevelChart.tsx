@@ -216,6 +216,7 @@ export function StockLevelChart() {
                 fill: "#6B7280",
                 fontSize: 12,
               }}
+              scale="sqrt"
             />
             <Tooltip
               formatter={(value) => [`${value}`, "Jumlah Stok"]}
