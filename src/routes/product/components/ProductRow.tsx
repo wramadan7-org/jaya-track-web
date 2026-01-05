@@ -1,25 +1,63 @@
-import { MoreVertical, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  MoreVertical,
+  CheckCircle2,
+  AlertCircle,
+  Trash2,
+  Pencil,
+} from "lucide-react";
 import type { Product } from "../types";
+import { useModalCreateUpdateProductStore } from "../store/product.modal.store";
+import { useProductStore } from "../store";
+import { useConfirmStore } from "@/app/stores/confirm.store";
 
-export function ProductRow({ product }: { product: Product }) {
+export function ProductRow({
+  product,
+  index,
+  isOpen,
+  onToggle,
+  onClose,
+}: {
+  product: Product;
+  index?: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+}) {
+  const { onOpen } = useModalCreateUpdateProductStore();
+  const { selectId, removeProduct } = useProductStore();
+  const confirm = useConfirmStore((s) => s.confirm);
+
   let statusLabel = "Habis";
   if (product.status === "In Stock") statusLabel = "Tersedia";
   if (product.status === "Low Stock") statusLabel = "Stok Menipis";
 
+  const handleMenuAction = async (type: "edit" | "delete") => {
+    selectId(product.id);
+    onClose();
+
+    if (type === "edit") {
+      onOpen();
+    } else {
+      const ok = await confirm({
+        title: "Konfirmasi Penghapusan",
+        message: `Produk "${product.name}" akan dihapus secara permanen.`,
+      });
+
+      if (!ok) return;
+      // use await if API already exists
+      removeProduct(product.id);
+    }
+  };
+
   return (
-    <tr className="hover:bg-gray-50/50 transition-colors group">
+    <tr
+      className={`transition-colors group ${
+        index && index % 2 === 1 && "bg-gray-300/80"
+      }`}
+    >
       {/* Produk */}
       <td className="px-6 py-4">
-        <div className="flex flex-col">
-          <span className="font-medium text-gray-900">{product.name}</span>
-          <span className="text-xs text-gray-500">SKU: {product.sku}</span>
-        </div>
-      </td>
-      {/* Kategori */}
-      <td className="px-6 py-4">
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-          {product.category}
-        </span>
+        <span className="font-medium text-gray-900">{product.name}</span>
       </td>
       {/* Stok */}
       <td className="px-6 py-4">
@@ -82,9 +120,36 @@ export function ProductRow({ product }: { product: Product }) {
       </td>
       {/* Action */}
       <td className="px-6 py-4 text-right">
-        <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+        <button
+          className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors z-20 relative"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle();
+          }}
+        >
           <MoreVertical className="w-4 h-4" />
         </button>
+        {isOpen && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50"
+          >
+            <button
+              onClick={() => handleMenuAction("edit")}
+              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+            >
+              <Pencil className="w-4 h-4" />
+              Edit Produk
+            </button>
+            <button
+              onClick={() => handleMenuAction("delete")}
+              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+            >
+              <Trash2 className="w-4 h-4" />
+              Hapus Produk
+            </button>
+          </div>
+        )}
       </td>
     </tr>
   );

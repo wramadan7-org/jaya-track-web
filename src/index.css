@@ -15,6 +15,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

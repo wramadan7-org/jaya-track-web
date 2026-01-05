@@ -2,23 +2,28 @@ import { useState } from "react";
 import { ProductHeader } from "./components/ProductHeader";
 import { ProductFilters } from "./components/ProductFilter";
 import { ProductTable } from "./components/ProductTable";
-import { mockProducts } from "./data/mockProducts";
 import { ProductPagination } from "./components/ProductPagination";
+import { useProductStore } from "./store";
+import type { ProductStatus } from "./types";
+import { ModalCreateUpdateProduct } from "./components/ModalCreateUpdateProduct";
+import { useModalCreateUpdateProductStore } from "./store/product.modal.store";
 
 const ITEMS_PER_PAGE = 15;
 
 export default function ProductPage() {
+  const { products, selectedId, selectId } = useProductStore();
+  const { isOpen, onClose } = useModalCreateUpdateProductStore();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState<ProductStatus | "">("");
 
-  const filteredProducts = mockProducts.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     const keywordSearch = searchTerm.toLowerCase();
-    const keywordFilter = selectedCategory.toLowerCase();
+    const keywordFilter = selectedStatus.toLowerCase();
     return (
-      (product.name.toLowerCase().includes(keywordSearch) ||
-        product.sku.toLowerCase().includes(keywordSearch)) &&
-      product.category.toLowerCase().includes(keywordFilter)
+      product.name.toLowerCase().includes(keywordSearch) &&
+      product.status.toLowerCase().includes(keywordFilter)
     );
   });
 
@@ -45,21 +50,26 @@ export default function ProductPage() {
     setCurrentPage(1);
   };
 
-  const handleCategoryChange = (value: string) => {
-    setSelectedCategory(value);
+  const handleStatusChange = (value: ProductStatus | "") => {
+    setSelectedStatus(value);
     setCurrentPage(1);
   };
 
+  const handleCloseModal = () => {
+    onClose();
+    selectId();
+  };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 relative">
       {/* Header */}
       <ProductHeader />
       {/* Filters & Search */}
       <ProductFilters
         search={searchTerm}
-        category={selectedCategory}
+        status={selectedStatus}
         onSearch={handleSearch}
-        onCategoryChange={handleCategoryChange}
+        onStatusChange={handleStatusChange}
       />
       {/* Products Table */}
       <ProductTable products={paginatedProducts} />
@@ -72,6 +82,11 @@ export default function ProductPage() {
         totalItems={totalItems}
         visiblePages={visiblePages}
         onPageChange={setCurrentPage}
+      />
+      <ModalCreateUpdateProduct
+        open={isOpen}
+        onClose={handleCloseModal}
+        id={selectedId}
       />
     </div>
   );

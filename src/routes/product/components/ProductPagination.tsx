@@ -28,7 +28,7 @@ export function ProductPagination({
         <button
           disabled={currentPage === 1 || totalItems === 0}
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-          className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           Sebelumnya
         </button>
@@ -82,7 +82,7 @@ export function ProductPagination({
         <button
           disabled={currentPage === totalPages || totalItems === 0}
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-          className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           Berikutnya
         </button>
