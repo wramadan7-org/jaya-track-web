@@ -13,12 +13,22 @@ export type Product = {
   updatedAt: Date;
 };
 
+export type CreateProductPayload = Omit<
+  Product,
+  "id" | "stock" | "status" | "createdAt" | "updatedAt"
+>;
+
+export type UpdateProductPayload = Omit<
+  Product,
+  "id" | "stock" | "status" | "createdAt"
+>;
+
 export type ProductState = {
   products: Product[];
   selectedId: string;
   selectId: (id?: string) => void;
-  addProduct: (product: Product) => void;
-  updateProduct: (id: string, payload: Partial<Product>) => void;
+  addProduct: (product: CreateProductPayload) => void;
+  updateProduct: (id: string, payload: Partial<UpdateProductPayload>) => void;
   removeProduct: (id: string) => void;
 };
 

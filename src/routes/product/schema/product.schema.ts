@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-export const createProductSchema = z
+export const createUpdateProductSchema = z
   .object({
     name: z.string().min(3, "Nama produk minimal 3 karakter"),
-    stock: z.number().min(0, "Stok tidak boleh negatif"),
     minStock: z.number().min(0, "Minimum stok tidak boleh negatif"),
     fillPerSack: z.number().min(1, "Isi per karung minimal 1"),
     basePrice: z.number().min(0, "Harga modal tidak boleh negatif"),
@@ -14,4 +13,6 @@ export const createProductSchema = z
     path: ["sellPrice"],
   });
 
-export type CreateProductFormSchema = z.infer<typeof createProductSchema>;
+export type CreateUpdateProductFormSchema = z.infer<
+  typeof createUpdateProductSchema
+>;

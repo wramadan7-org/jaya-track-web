@@ -6,11 +6,10 @@ import type { ModalProps } from "@/types/modal";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  createProductSchema,
-  type CreateProductFormSchema,
+  createUpdateProductSchema,
+  type CreateUpdateProductFormSchema,
 } from "../schema/product.schema";
 import { useEffect } from "react";
-import { calculateProductStatus } from "@/utils/product";
 import { useConfirmStore } from "@/app/stores/confirm.store";
 
 export function ModalCreateUpdateProduct({
@@ -31,8 +30,8 @@ export function ModalCreateUpdateProduct({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<CreateProductFormSchema>({
-    resolver: zodResolver(createProductSchema),
+  } = useForm<CreateUpdateProductFormSchema>({
+    resolver: zodResolver(createUpdateProductSchema),
   });
 
   useEffect(() => {
@@ -40,7 +39,6 @@ export function ModalCreateUpdateProduct({
       if (product) {
         reset({
           name: product.name,
-          stock: product.stock,
           minStock: product.minStock,
           fillPerSack: product.fillPerSack,
           basePrice: product.basePrice,
@@ -49,7 +47,6 @@ export function ModalCreateUpdateProduct({
       } else {
         reset({
           name: "",
-          stock: 0,
           minStock: 0,
           fillPerSack: 0,
           basePrice: 0,
@@ -61,7 +58,7 @@ export function ModalCreateUpdateProduct({
 
   if (!open) return null;
 
-  const onSubmit = async (data: CreateProductFormSchema) => {
+  const onSubmit = async (data: CreateUpdateProductFormSchema) => {
     const ok = await confirm({
       title: `Konfirmasi ${product && id ? "Perubahan" : "Penambahan"} Produk`,
       message:
@@ -79,16 +76,9 @@ export function ModalCreateUpdateProduct({
       updateProduct(id, {
         ...product,
         ...data,
-        updatedAt: new Date(),
       });
     } else {
-      addProduct({
-        id: crypto.randomUUID(),
-        ...data,
-        status: calculateProductStatus(data.stock, data.minStock),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+      addProduct(data);
     }
 
     reset();
@@ -128,21 +118,12 @@ export function ModalCreateUpdateProduct({
             />
             <div className="grid grid-cols-2 gap-4">
               <InputForm
-                label="Stok Awal"
-                {...register("stock", { valueAsNumber: true })}
-                type="number"
-                placeholder="20"
-                error={errors.stock?.message}
-              />
-              <InputForm
                 label="Minimum Stok"
                 {...register("minStock", { valueAsNumber: true })}
                 type="number"
                 placeholder="10"
                 error={errors.minStock?.message}
               />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
               <InputForm
                 label="Isi / Karung"
                 {...register("fillPerSack", { valueAsNumber: true })}
@@ -150,6 +131,8 @@ export function ModalCreateUpdateProduct({
                 placeholder="15"
                 error={errors.fillPerSack?.message}
               />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <InputForm
                 label="Harga Modal"
                 {...register("basePrice", { valueAsNumber: true })}
@@ -157,14 +140,14 @@ export function ModalCreateUpdateProduct({
                 placeholder="84000"
                 error={errors.basePrice?.message}
               />
+              <InputForm
+                label="Harga Jual"
+                {...register("sellPrice", { valueAsNumber: true })}
+                type="number"
+                placeholder="90000"
+                error={errors.sellPrice?.message}
+              />
             </div>
-            <InputForm
-              label="Harga Jual"
-              {...register("sellPrice", { valueAsNumber: true })}
-              type="number"
-              placeholder="90000"
-              error={errors.sellPrice?.message}
-            />
           </div>
           {/* Footer */}
           <div className="flex justify-end gap-2 px-6 py-4 border-t">
