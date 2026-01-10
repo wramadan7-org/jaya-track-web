@@ -35,6 +35,12 @@ export default function ModalCreateStockMovement({
     value: item.id,
   }));
 
+  const optionReferenceType = [
+    { label: "Pesanan Pembelian", value: "PURCHASE_ORDER" },
+    { label: "Penyesuaian Stok", value: "STOCK_ADJUSTMENT" },
+    { label: "Faktur Penjualan", value: "INVOICE" },
+  ];
+
   const {
     register,
     control,
@@ -166,11 +172,7 @@ export default function ModalCreateStockMovement({
                 control={control}
                 placeholder="Pilih Tipe Referensi"
                 error={errors.type?.message}
-                options={[
-                  { label: "Pesanan Pembelian", value: "PURCHASE_ORDER" },
-                  { label: "Penyesuaian Stok", value: "STOCK_ADJUSTMENT" },
-                  { label: "Faktur Penjualan", value: "INVOICE" },
-                ]}
+                options={optionReferenceType}
               />
             </div>
             <TextareaForm
