@@ -19,6 +19,7 @@ import { changeWordingStockMovementType } from "@/utils/wording";
 import { useConfirmStore } from "@/app/stores/confirm.store";
 import { useStockMovementStore } from "../store";
 import { useProductStore } from "@/routes/product/store";
+import { STOCK_MOVEMENT_REFERENCE_TYPE } from "@/constants/stock";
 
 export default function ModalCreateStockMovement({
   open,
@@ -36,9 +37,15 @@ export default function ModalCreateStockMovement({
   }));
 
   const optionReferenceType = [
-    { label: "Pesanan Pembelian", value: "PURCHASE_ORDER" },
-    { label: "Penyesuaian Stok", value: "STOCK_ADJUSTMENT" },
-    { label: "Faktur Penjualan", value: "INVOICE" },
+    {
+      label: STOCK_MOVEMENT_REFERENCE_TYPE.id.PURCHASE_ORDER,
+      value: "PURCHASE_ORDER",
+    },
+    {
+      label: STOCK_MOVEMENT_REFERENCE_TYPE.id.STOCK_ADJUSTMENT,
+      value: "STOCK_ADJUSTMENT",
+    },
+    { label: STOCK_MOVEMENT_REFERENCE_TYPE.id.INVOICE, value: "INVOICE" },
   ];
 
   const {
@@ -84,7 +91,7 @@ export default function ModalCreateStockMovement({
       productId: data.product,
       product: productName?.label ?? "-",
       referenceId: null,
-      type: data.type as StockMovementType,
+      type: movementType as StockMovementType,
       referenceType: data.referenceType as StockMovementReferenceType,
       qty: data.qty,
     };
@@ -98,6 +105,7 @@ export default function ModalCreateStockMovement({
   const handleClose = () => {
     reset();
     onClose();
+    setMovementType("IN");
   };
 
   return (
@@ -107,12 +115,11 @@ export default function ModalCreateStockMovement({
           <h2 className="text-lg font-bold text-gray-900">Tambah Stok</h2>
           <button
             onClick={() => handleClose()}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
           {/* Type Toggle */}
           <div className="flex bg-gray-100 p-1 rounded-lg">
@@ -156,7 +163,7 @@ export default function ModalCreateStockMovement({
               label="Produk"
               control={control}
               placeholder="Pilih Produk"
-              error={errors.type?.message}
+              error={errors.product?.message}
               options={optionProducts}
             />
             <div className="grid grid-cols-2 gap-4">
@@ -171,7 +178,7 @@ export default function ModalCreateStockMovement({
                 label="Tipe Referensi"
                 control={control}
                 placeholder="Pilih Tipe Referensi"
-                error={errors.type?.message}
+                error={errors.referenceType?.message}
                 options={optionReferenceType}
               />
             </div>

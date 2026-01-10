@@ -18,14 +18,16 @@ export default function StockMovementPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedType, setSelectedType] = useState<"" | StockMovementType>("");
 
-  const filteredStockMovements = stockMovements.filter((movement) => {
-    const keywordSearch = searchTerm.toLowerCase();
-    const keywordFilter = selectedType.toLowerCase();
-    return (
-      movement.product.toLowerCase().includes(keywordSearch) &&
-      movement.type.toLowerCase().includes(keywordFilter)
-    );
-  });
+  const filteredStockMovements = stockMovements
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .filter((movement) => {
+      const keywordSearch = searchTerm.toLowerCase();
+      const keywordFilter = selectedType.toLowerCase();
+      return (
+        movement.product.toLowerCase().includes(keywordSearch) &&
+        movement.type.toLowerCase().includes(keywordFilter)
+      );
+    });
 
   const totalItems = filteredStockMovements.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);

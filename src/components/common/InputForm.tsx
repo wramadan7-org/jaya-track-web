@@ -12,10 +12,10 @@ const InputForm = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
           onWheel={(e) => (e.target as HTMLInputElement).blur()}
-          className={`w-full px-3 py-2 border border-gray-500 rounded-md text-sm focus:outline-none focus:ring-2 text-gray-800 ${
+          className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 text-gray-800 ${
             error
               ? "focus:ring-red-100 border-red-500 placeholder:text-red-400"
-              : "focus:ring-blue-500 placeholder:text-gray-400"
+              : "focus:ring-blue-100 placeholder:text-gray-400 border-gray-300"
           }`}
         />
         {error && <span className="text-red-400 text-sm">{error}</span>}

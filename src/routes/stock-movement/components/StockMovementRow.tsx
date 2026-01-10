@@ -4,14 +4,7 @@ import {
 } from "@/utils/wording";
 import type { Stock } from "../type";
 import { getDateTime } from "@/utils/date";
-import {
-  ArrowDownLeft,
-  ArrowUpRight,
-  Eye,
-  MoreHorizontal,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, Eye, MoreHorizontal } from "lucide-react";
 import { useModalCreateUpdateStockMovementStore } from "../store/stock-movement.moda.store";
 import { useConfirmStore } from "@/app/stores/confirm.store";
 import { useStockMovementStore } from "../store";
@@ -135,20 +128,6 @@ export default function StockMovementRow({
             >
               <Eye className="w-4 h-4" />
               Detail Pergerakan Stok
-            </button>
-            <button
-              onClick={() => handleMenuAction("edit")}
-              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
-            >
-              <Pencil className="w-4 h-4" />
-              Edit Pergerakan Stok
-            </button>
-            <button
-              onClick={() => handleMenuAction("delete")}
-              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
-            >
-              <Trash2 className="w-4 h-4" />
-              Hapus Pergerakan Stok
             </button>
           </div>
         )}

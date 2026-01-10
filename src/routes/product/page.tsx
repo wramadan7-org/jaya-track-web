@@ -18,14 +18,16 @@ export default function ProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<ProductStatus | "">("");
 
-  const filteredProducts = products.filter((product) => {
-    const keywordSearch = searchTerm.toLowerCase();
-    const keywordFilter = selectedStatus.toLowerCase();
-    return (
-      product.name.toLowerCase().includes(keywordSearch) &&
-      product.status.toLowerCase().includes(keywordFilter)
-    );
-  });
+  const filteredProducts = products
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .filter((product) => {
+      const keywordSearch = searchTerm.toLowerCase();
+      const keywordFilter = selectedStatus.toLowerCase();
+      return (
+        product.name.toLowerCase().includes(keywordSearch) &&
+        product.status.toLowerCase().includes(keywordFilter)
+      );
+    });
 
   const totalItems = filteredProducts.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);

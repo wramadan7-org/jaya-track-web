@@ -23,9 +23,25 @@ export default function ConfirmModal() {
 
     confirmBtnRef.current?.focus();
 
+    const focusable = modalRef.current?.querySelectorAll<HTMLButtonElement>(
+      "button:not([disabled])"
+    );
+
+    if (!focusable || focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !loading) close();
       if (e.key === "Enter") handleConfirm();
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener("keydown", handleKey);

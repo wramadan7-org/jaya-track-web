@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { Save, X } from "lucide-react";
 import { useProductStore } from "../store";
 import type { Product } from "../types";
 import InputForm from "@/components/common/InputForm";
@@ -96,7 +96,7 @@ export function ModalCreateUpdateProduct({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <h2 className="text-lg font-semibold text-gray-900">
-            {product ? "Edit Produk" : "Tambah Produk Baru"}
+            {product ? "Edit Produk" : "Tambah Produk"}
           </h2>
           <button
             type="button"
@@ -154,14 +154,15 @@ export function ModalCreateUpdateProduct({
             <button
               type="button"
               onClick={() => handleClose()}
-              className="px-4 py-2 text-sm rounded-md border text-white cursor-pointer bg-red-500 hover:bg-red-700"
+              className="px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+              className="flex items-center gap-2 px-6 py-2 text-white rounded-lg transition-all shadow-sm font-medium cursor-pointer bg-green-600 hover:bg-green-700 shadow-green-600/20"
             >
+              <Save className="w-4 h-4" />
               Simpan Produk
             </button>
           </div>
