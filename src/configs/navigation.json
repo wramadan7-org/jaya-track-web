@@ -10,12 +10,12 @@
       "icon": "settings",
       "children": [
         {
-          "label": "Users",
-          "path": "/users"
+          "label": "Produk",
+          "path": "/product"
         },
         {
-          "label": "Products",
-          "path": "/product"
+          "label": "Pergerakan Stok",
+          "path": "/stock-movement"
         }
       ]
     }

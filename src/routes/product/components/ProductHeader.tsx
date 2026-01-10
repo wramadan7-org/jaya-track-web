@@ -12,8 +12,8 @@ export function ProductHeader() {
           Kelola katalog inventaris, tingkat stok, dan harga produk Anda.
         </p>
       </div>
-      <div className="flex items-center gap-3">
-        <button className="flex items-center gap-2 px-4 py-2 bg-green-600 rounded-lg text-white hover:bg-green-700 hover:border-green-300 transition-all shadow-sm cursor-pointer">
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
+        <button className="flex items-center gap-2 px-4 py-2 bg-green-600 rounded-lg text-white hover:bg-green-700 transition-all shadow-sm cursor-pointer">
           <Download className="w-4 h-4" />
           <span>Export</span>
         </button>

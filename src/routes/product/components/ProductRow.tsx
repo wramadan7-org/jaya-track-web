@@ -9,6 +9,15 @@ import type { Product } from "../types";
 import { useModalCreateUpdateProductStore } from "../store/product.modal.store";
 import { useProductStore } from "../store";
 import { useConfirmStore } from "@/app/stores/confirm.store";
+import { changeWordingStatusProduct } from "@/utils/wording";
+
+type Props = {
+  product: Product;
+  index?: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+};
 
 export function ProductRow({
   product,
@@ -16,20 +25,10 @@ export function ProductRow({
   isOpen,
   onToggle,
   onClose,
-}: {
-  product: Product;
-  index?: number;
-  isOpen: boolean;
-  onToggle: () => void;
-  onClose: () => void;
-}) {
+}: Props) {
   const { onOpen } = useModalCreateUpdateProductStore();
   const { selectId, removeProduct } = useProductStore();
   const confirm = useConfirmStore((s) => s.confirm);
-
-  let statusLabel = "Habis";
-  if (product.status === "In Stock") statusLabel = "Tersedia";
-  if (product.status === "Low Stock") statusLabel = "Stok Menipis";
 
   const handleMenuAction = async (type: "edit" | "delete") => {
     selectId(product.id);
@@ -115,7 +114,7 @@ export function ProductRow({
               : "text-red-700"
           }`}
         >
-          {statusLabel}
+          {changeWordingStatusProduct(product.status)}
         </span>
       </td>
       {/* Action */}

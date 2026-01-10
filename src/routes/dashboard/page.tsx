@@ -10,15 +10,15 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Dashboard Overview
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900">Monitoring Stok</h1>
           <p className="text-gray-500 mt-1">
-            Real-time inventory metrics and activity
+            Pantau kondisi stok dan aktivitas gudang secara real-time
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500">Last updated: Just now</span>
+          <span className="text-sm text-gray-500">
+            Terakhir diperbarui: Sekarang
+          </span>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

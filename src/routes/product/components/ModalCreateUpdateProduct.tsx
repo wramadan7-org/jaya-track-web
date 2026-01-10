@@ -47,10 +47,10 @@ export function ModalCreateUpdateProduct({
       } else {
         reset({
           name: "",
-          minStock: 0,
-          fillPerSack: 0,
-          basePrice: 0,
-          sellPrice: 0,
+          minStock: undefined,
+          fillPerSack: undefined,
+          basePrice: undefined,
+          sellPrice: undefined,
         });
       }
     }
@@ -91,7 +91,7 @@ export function ModalCreateUpdateProduct({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm transition-all">
       <div className="bg-white w-full max-w-lg rounded-xl shadow-lg">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b">

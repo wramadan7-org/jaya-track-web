@@ -8,7 +8,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export function ProductPagination({
+export function StockMovementPagination({
   currentPage,
   totalPages,
   startIndex,
@@ -21,7 +21,7 @@ export function ProductPagination({
     <div className="px-6 py-4 border-t border-gray-100 hidden md:flex items-center justify-between bg-white rounded-xl">
       <span className="text-sm text-gray-500">
         Menampilkan {totalItems === 0 ? 0 : startIndex + 1}-
-        {Math.min(endIndex, totalItems)} dari {totalItems} produk
+        {Math.min(endIndex, totalItems)} dari {totalItems} pergerakan stok
       </span>
       <div className="flex items-center gap-1">
         {/* Previous */}

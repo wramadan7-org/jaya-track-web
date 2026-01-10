@@ -35,11 +35,8 @@ export default function ProductPage() {
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
   const maxVisiblePage = 5;
-
   const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePage / 2));
-
   const endPage = Math.min(totalPages, startPage + maxVisiblePage - 1);
-
   const visiblePages = Array.from(
     { length: endPage - startPage + 1 },
     (_, i) => startPage + i

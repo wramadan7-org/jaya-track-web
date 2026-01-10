@@ -21,7 +21,7 @@ export function ProductFilters({
         <input
           type="text"
           placeholder="Cari produk berdasarkan nama..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-gray-600"
+          className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-gray-600 text-ellipsis"
           value={search}
           onChange={(e) => onSearch(e.target.value)}
         />
