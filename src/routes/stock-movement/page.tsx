@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import StockMovementFilter from "./components/StockMovementFilter";
 import StockMovementHeader from "./components/StockMovementHeader";
 import type { StockMovementType } from "./type";
@@ -7,6 +7,7 @@ import StockMovementTable from "./components/StockMovementTable";
 import { useModalCreateUpdateStockMovementStore } from "./store/stock-movement.moda.store";
 import { StockMovementPagination } from "./components/StockMovementPagination";
 import ModalCreateStockMovement from "./components/ModalCreateUpdateStockMovement";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const ITEMS_PER_PAGE = 15;
 
@@ -14,20 +15,23 @@ export default function StockMovementPage() {
   const stockMovements = useStockMovementStore((s) => s.stockMovements);
   const { isOpen, onClose } = useModalCreateUpdateStockMovementStore();
 
+  const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedType, setSelectedType] = useState<"" | StockMovementType>("");
 
-  const filteredStockMovements = stockMovements
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    .filter((movement) => {
-      const keywordSearch = searchTerm.toLowerCase();
-      const keywordFilter = selectedType.toLowerCase();
-      return (
-        movement.product.toLowerCase().includes(keywordSearch) &&
-        movement.type.toLowerCase().includes(keywordFilter)
-      );
-    });
+  const filteredStockMovements = useMemo(() => {
+    return stockMovements
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .filter((movement) => {
+        const keywordSearch = searchTerm.toLowerCase();
+        const keywordFilter = selectedType.toLowerCase();
+        return (
+          movement.product.toLowerCase().includes(keywordSearch) &&
+          movement.type.toLowerCase().includes(keywordFilter)
+        );
+      });
+  }, [searchTerm, selectedType, stockMovements]);
 
   const totalItems = filteredStockMovements.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
@@ -47,10 +51,10 @@ export default function StockMovementPage() {
     (_, i) => startPage + i
   );
 
-  const handleSearch = (value: string) => {
+  const { debounced: debounceSearch } = useDebounce((value: string) => {
     setSearchTerm(value);
     setCurrentPage(1);
-  };
+  }, 300);
 
   const handleChangeFilterType = (type: "" | StockMovementType) => {
     setSelectedType(type);
@@ -67,9 +71,12 @@ export default function StockMovementPage() {
       <StockMovementHeader />
       {/* Filter */}
       <StockMovementFilter
-        search={searchTerm}
+        search={searchInput}
         filterType={selectedType}
-        onSearch={handleSearch}
+        onSearch={(value) => {
+          setSearchInput(value);
+          debounceSearch(value);
+        }}
         onFilterTypeChange={handleChangeFilterType}
       />
       {/** Table */}
