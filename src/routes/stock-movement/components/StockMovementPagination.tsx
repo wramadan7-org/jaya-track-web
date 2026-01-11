@@ -1,3 +1,5 @@
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -18,19 +20,19 @@ export function StockMovementPagination({
   onPageChange,
 }: PaginationProps) {
   return (
-    <div className="px-6 py-4 border-t border-gray-100 hidden md:flex items-center justify-between bg-white rounded-xl">
+    <div className="px-6 py-4 border-t border-gray-100 flex flex-col space-y-3 md:space-y-0 md:flex-row items-center justify-between bg-white rounded-xl">
       <span className="text-sm text-gray-500">
         Menampilkan {totalItems === 0 ? 0 : startIndex + 1}-
         {Math.min(endIndex, totalItems)} dari {totalItems} pergerakan stok
       </span>
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-1">
         {/* Previous */}
         <button
           disabled={currentPage === 1 || totalItems === 0}
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
-          Sebelumnya
+          <ArrowLeft className="w-4 h-4" />
         </button>
         {/* Ellipsis Start */}
         {visiblePages.at(0)! > 1 && (
@@ -84,7 +86,7 @@ export function StockMovementPagination({
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           className="px-3 py-1 text-sm border rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
-          Berikutnya
+          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>

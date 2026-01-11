@@ -1,11 +1,35 @@
 import { changeWordingStatusProduct } from "@/utils/wording";
 import type { Product } from "../types";
+import { useModalCreateUpdateProductStore } from "../store/product.modal.store";
+import { useProductStore } from "../store";
+import { useConfirmStore } from "@/app/stores/confirm.store";
 
 type Props = {
   product: Product;
 };
 
 export default function ProductCardMobile({ product }: Props) {
+  const { onOpen } = useModalCreateUpdateProductStore();
+  const { selectId, removeProduct } = useProductStore();
+  const confirm = useConfirmStore((s) => s.confirm);
+
+  const handleAction = async (type: "edit" | "delete") => {
+    selectId(product.id);
+
+    if (type === "edit") {
+      onOpen();
+    } else {
+      const ok = await confirm({
+        title: "Konfirmasi Penghapusan",
+        message: `Produk "${product.name}" akan dihapus secara permanen.`,
+      });
+
+      if (!ok) return;
+      // use await if API already exists
+      removeProduct(product.id);
+    }
+  };
+
   return (
     <div
       key={`card-product-${product.id}`}
@@ -47,10 +71,18 @@ export default function ProductCardMobile({ product }: Props) {
       </div>
       {/* Action */}
       <div className="mt-4 flex justify-end gap-2">
-        <button className="px-3 py-1.5 text-sm text-gray-600 border rounded-lg hover:bg-gray-50">
-          Detail
+        <button
+          type="button"
+          className="px-3 py-1.5 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 hover:border-red-300 transition-colors cursor-pointer"
+          onClick={() => handleAction("delete")}
+        >
+          Hapus
         </button>
-        <button className="px-3 py-1.5 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+        <button
+          type="button"
+          className="px-3 py-1.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-600/20 cursor-pointer"
+          onClick={() => handleAction("edit")}
+        >
           Edit
         </button>
       </div>
