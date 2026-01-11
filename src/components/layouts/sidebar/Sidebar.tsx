@@ -59,7 +59,7 @@ export default function Sidebar() {
             className="p-2 rounded hover:bg-slate-800 cursor-pointer"
             aria-label="Toggle sidebar mode"
           >
-            <Menu className="w-5 h-5 text-slate-700" />
+            <Menu className="w-5 h-5 text-slate-300" />
           </button>
         </div>
 
