@@ -153,7 +153,7 @@ export default function ModalCreateStockMovement({
                   movementType === "OUT" ? "text-red-600" : ""
                 }`}
               />
-              Stock Out
+              Stock Keluar
             </button>
           </div>
 
