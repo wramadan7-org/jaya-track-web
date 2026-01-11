@@ -6,7 +6,7 @@ import { useStockMovementStore } from "./store";
 import StockMovementTable from "./components/StockMovementTable";
 import { useModalCreateUpdateStockMovementStore } from "./store/stock-movement.moda.store";
 import { StockMovementPagination } from "./components/StockMovementPagination";
-import ModalCreateStockMovement from "./components/ModalCreateUpdateStockMovement";
+import ModalCreateStockMovement from "./components/ModalCreateStockMovement";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const ITEMS_PER_PAGE = 15;
