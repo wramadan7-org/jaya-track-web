@@ -118,7 +118,10 @@ export default function SidebarItem({ item, collapsed }: Props) {
               <NavLink
                 key={child.path}
                 to={child.path!}
-                onClick={closeSidebar}
+                onClick={() => {
+                  closeSidebar();
+                  setHovered(false);
+                }}
                 className={({ isActive }) =>
                   `
                   block px-3 py-2 rounded-md text-sm
