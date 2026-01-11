@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-/* =========================
-   ROOT LAYOUT
-========================= */
+/* ROOT LAYOUT */
 .app-layout {
   @apply flex h-screen w-full bg-gray-50 text-slate-100;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* SIDEBAR */
 .sidebar {
   @apply fixed inset-y-0 left-0 z-40
     w-64 shrink-0
@@ -23,17 +19,12 @@
   @apply -translate-x-full lg:translate-x-0;
 }
 
-/* =========================
-   MAIN AREA
-========================= */
+/* MAIN AREA */
 .app-main {
-  @apply flex flex-1 flex-col
-    lg:pl-64 pb-5;
+  @apply flex flex-1 flex-col pb-5 transition-all;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAVBAR */
 .navbar {
   @apply sticky top-0 z-30
     h-14
@@ -42,16 +33,12 @@
     bg-slate-900 border-b border-slate-800;
 }
 
-/* =========================
-   CONTENT
-========================= */
+/* CONTENT */
 .app-content {
   @apply flex-1 overflow-y-auto p-4 md:p-6;
 }
 
-/* =========================
-   SCROLLBAR (optional)
-========================= */
+/* SCROLLBAR (optional) */
 ::-webkit-scrollbar {
   width: 6px;
 }

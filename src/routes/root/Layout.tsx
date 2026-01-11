@@ -7,6 +7,9 @@ import { useUIStore } from "@/app/stores/ui.store";
 
 export default function RootLayout() {
   const closeSidebar = useUIStore((s) => s.closeSidebar);
+  const sidebarMode = useUIStore((s) => s.sidebarMode);
+
+  const isCollapsed = sidebarMode === "collapsed";
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
@@ -25,7 +28,7 @@ export default function RootLayout() {
     <div className="app-layout">
       <Sidebar />
 
-      <div className="app-main">
+      <div className={`app-main ${isCollapsed ? "lg:pl-20" : "lg:pl-64"}`}>
         <Navbar />
 
         <main className="app-content">

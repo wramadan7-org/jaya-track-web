@@ -3,11 +3,20 @@ import type { NavigationConfig } from "@/types/navigation";
 import SidebarItem from "./SidebarItem";
 import { useUIStore } from "@/app/stores/ui.store";
 import { NavLink } from "react-router";
+import { Menu } from "lucide-react";
 
 const navigation = navigationData as NavigationConfig;
 
 export default function Sidebar() {
-  const { sidebarOpen, toggleSidebar, closeSidebar } = useUIStore();
+  const {
+    sidebarOpen,
+    toggleSidebar,
+    closeSidebar,
+    sidebarMode,
+    toggleSidebarMode,
+  } = useUIStore();
+
+  const isCollapsed = sidebarMode === "collapsed";
 
   return (
     <>
@@ -21,24 +30,42 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed z-50 inset-y-0 left-0 w-64
+          fixed z-50 inset-y-0 left-0
+          ${isCollapsed ? "w-20" : "w-64"}
           bg-slate-900 text-slate-200
-          transform transition-transform duration-300
+          transition-all duration-300
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
         `}
       >
-        <NavLink
-          to={"/"}
-          className="h-16 flex items-center px-6 text-lg font-semibold border-b border-slate-800 w-full cursor-pointer text-white"
-          onClick={() => closeSidebar()}
+        {/* Header */}
+        <div
+          className={`h-16 flex items-center ${
+            isCollapsed ? "justify-center" : "justify-between"
+          }  px-4 border-b border-slate-800`}
         >
-          <p className="text-white">MyApp</p>
-        </NavLink>
+          {!isCollapsed && (
+            <NavLink
+              to="/"
+              className="text-lg font-semibold text-white"
+              onClick={closeSidebar}
+            >
+              MyApp
+            </NavLink>
+          )}
 
-        <nav className="p-4 space-y-1">
+          <button
+            onClick={toggleSidebarMode}
+            className="p-2 rounded hover:bg-slate-800 cursor-pointer"
+            aria-label="Toggle sidebar mode"
+          >
+            <Menu className="w-5 h-5 text-slate-700" />
+          </button>
+        </div>
+
+        <nav className="p-2 space-y-1">
           {navigation.sidebar.map((item) => (
-            <SidebarItem key={item.label} item={item} />
+            <SidebarItem key={item.label} item={item} collapsed={isCollapsed} />
           ))}
         </nav>
       </aside>
