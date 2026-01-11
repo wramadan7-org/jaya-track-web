@@ -50,7 +50,7 @@ export function ProductTable({ products }: Props) {
             {products?.length > 0 ? (
               products.map((p, i) => (
                 <ProductRow
-                  key={p.id}
+                  key={`wrap-row-product-${p.id}`}
                   index={i}
                   product={p}
                   isOpen={openMenuId === p.id}
@@ -73,7 +73,12 @@ export function ProductTable({ products }: Props) {
       {/** Mobile */}
       <div className="md:hidden space-y-4">
         {products?.length > 0 ? (
-          products.map((product) => <ProductCardMobile product={product} />)
+          products.map((product) => (
+            <ProductCardMobile
+              key={`wrap-card-product-${product.id}`}
+              product={product}
+            />
+          ))
         ) : (
           <div className="text-center text-gray-500 py-8">
             Tidak ada produk yang ditemukan
