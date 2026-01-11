@@ -18,7 +18,7 @@ export default function Navbar() {
       {/* Mobile sidebar toggle */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden mr-4 p-2 rounded-md hover:bg-slate-100"
+        className="lg:hidden mr-4 p-2 rounded-md hover:bg-slate-100 cursor-pointer"
         aria-label="Toggle sidebar"
       >
         <Menu className="w-5 h-5 text-slate-700" />
