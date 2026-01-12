@@ -12,6 +12,14 @@ import {
 import { useEffect } from "react";
 import { useConfirmStore } from "@/app/stores/confirm.store";
 
+const defaultValue = {
+  name: "",
+  minStock: undefined,
+  fillPerSack: undefined,
+  basePrice: undefined,
+  sellPrice: undefined,
+};
+
 export function ModalCreateUpdateProduct({
   id,
   open,
@@ -45,13 +53,7 @@ export function ModalCreateUpdateProduct({
           sellPrice: product.sellPrice,
         });
       } else {
-        reset({
-          name: "",
-          minStock: undefined,
-          fillPerSack: undefined,
-          basePrice: undefined,
-          sellPrice: undefined,
-        });
+        reset(defaultValue);
       }
     }
   }, [open, product, reset]);
@@ -81,12 +83,12 @@ export function ModalCreateUpdateProduct({
       addProduct(data);
     }
 
-    reset();
+    reset(defaultValue);
     onClose();
   };
 
   const handleClose = () => {
-    reset();
+    reset(defaultValue);
     onClose();
   };
 
