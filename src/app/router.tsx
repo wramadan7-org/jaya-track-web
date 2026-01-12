@@ -1,4 +1,5 @@
 import DashboardPage from "@/routes/dashboard/page";
+import HomePage from "@/routes/home/page";
 import ProductPage from "@/routes/product/page";
 import ProfilePage from "@/routes/profile/page";
 import RootLayout from "@/routes/root/Layout";
@@ -10,6 +11,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
+      { index: true, element: <HomePage /> },
       { path: "dashboard", element: <DashboardPage /> },
       { path: "product", element: <ProductPage /> },
       { path: "profile", element: <ProfilePage /> },
