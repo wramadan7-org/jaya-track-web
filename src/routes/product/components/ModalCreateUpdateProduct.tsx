@@ -123,6 +123,7 @@ export function ModalCreateUpdateProduct({
                 label="Minimum Stok"
                 {...register("minStock", { valueAsNumber: true })}
                 type="number"
+                inputMode="numeric"
                 placeholder="10"
                 error={errors.minStock?.message}
               />
@@ -130,6 +131,7 @@ export function ModalCreateUpdateProduct({
                 label="Isi / Karung"
                 {...register("fillPerSack", { valueAsNumber: true })}
                 type="number"
+                inputMode="numeric"
                 placeholder="15"
                 error={errors.fillPerSack?.message}
               />
@@ -139,6 +141,7 @@ export function ModalCreateUpdateProduct({
                 label="Harga Modal"
                 {...register("basePrice", { valueAsNumber: true })}
                 type="number"
+                inputMode="numeric"
                 placeholder="84000"
                 error={errors.basePrice?.message}
               />
@@ -146,6 +149,7 @@ export function ModalCreateUpdateProduct({
                 label="Harga Jual"
                 {...register("sellPrice", { valueAsNumber: true })}
                 type="number"
+                inputMode="numeric"
                 placeholder="90000"
                 error={errors.sellPrice?.message}
               />

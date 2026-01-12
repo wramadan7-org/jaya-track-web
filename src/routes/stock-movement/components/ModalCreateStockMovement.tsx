@@ -21,6 +21,13 @@ import { useStockMovementStore } from "../store";
 import { useProductStore } from "@/routes/product/store";
 import { STOCK_MOVEMENT_REFERENCE_TYPE } from "@/constants/stock";
 
+const defaultValue = {
+  product: "",
+  qty: undefined,
+  type: "IN",
+  notes: undefined,
+};
+
 export default function ModalCreateStockMovement({
   open,
   onClose,
@@ -60,12 +67,7 @@ export default function ModalCreateStockMovement({
 
   useEffect(() => {
     if (open) {
-      reset({
-        product: "",
-        qty: undefined,
-        type: "IN",
-        notes: undefined,
-      });
+      reset(defaultValue);
     }
   }, [open, reset]);
 
@@ -98,12 +100,12 @@ export default function ModalCreateStockMovement({
 
     addStockMovement(payload);
 
-    reset();
+    reset(defaultValue);
     onClose();
   };
 
   const handleClose = () => {
-    reset();
+    reset(defaultValue);
     onClose();
     setMovementType("IN");
   };
@@ -170,6 +172,8 @@ export default function ModalCreateStockMovement({
               <InputForm
                 label="Quantity"
                 {...register("qty", { valueAsNumber: true })}
+                type="number"
+                inputMode="numeric"
                 placeholder="0"
                 error={errors.qty?.message}
               />

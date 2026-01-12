@@ -4,8 +4,22 @@ import z from "zod";
 export const createStockMovementSchema = z.object({
   product: z.string().min(1, { error: "Produk tidak boleh kosong" }),
   qty: z
-    .number({ error: "Quantity tidak boleh kosong" })
-    .min(0, "Stok tidak boleh negatif"),
+    .number({
+      error: (err) => {
+        if (Number.isNaN(err.input)) {
+          return { message: "Quantity tidak boleh kosong" };
+        }
+      },
+    })
+    .refine((val) => val !== undefined, {
+      message: "Quantity tidak boleh kosong",
+    })
+    .refine((val) => !Number.isNaN(val), {
+      message: "Quantity harus berupa angka",
+    })
+    .min(0, {
+      message: "Quantity tidak boleh kurang dari 0",
+    }),
   type: z.enum(Object.keys(stockMovementTypeLabel), {
     error: () => ({
       message: "Tipe pergerakan stok tidak valid",
